@@ -32,35 +32,6 @@
         </div>
 </div>-->
 
-    <span style="text-align: center; color: #ff0000">
-        <center>
-            <span>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="red"
-                    class="bi bi-calendar2-check"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"
-                    />
-                    <path
-                        d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"
-                    />
-                    <path
-                        fill-rule="evenodd"
-                        d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"
-                    />
-                </svg>
-            </span>
-        </center>
-        <h1>What To Do!</h1>
-    </span>
-    <hr />
-
     @auth
     <div class="container">
         <div class="row justify-content-center">
@@ -75,16 +46,16 @@
                             </div>
                         @endif
 
-                        <!-- {{ __('You are logged in!') }} -->
-                        @if ($tasks ?? '')
+                        <!-- {{ __('You are logged in and have tasks') }} -->
+                        @if (count($tasks) > 0)
                             @foreach($tasks as $task)
-                            {{ $task["id"] }} <br />
-                            {{ $task["title"] }} <br />
-                            {{ $task["description"] }} <br />
-                            <br />
+                                {{ $task["id"] }} <br />
+                                {{ $task["title"] }} <br />
+                                {{ $task["description"] }} <br />
+                                <br />
                             @endforeach
                         @else
-                            {{ 'Home route, from controller, without data' }}
+                            <b>Task 0 :</b> Create a new Task, Now!!
                         @endif
                     </div>
                 </div>
@@ -93,18 +64,26 @@
     </div>
     @endauth
 
-
-    <!-- @auth
+    @guest
     <div class="container">
-        @foreach($tasks as $task)
-        {{ $task["id"] }} <br />
-        {{ $task["title"] }} <br />
-        {{ $task["description"] }} <br />
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('My Tasks') }}</div>
 
-        <br />
-        @endforeach
+                    <div class="card-body">
+                        <!-- {{ __('Guest Section!') }} -->
+                        <ol>
+                            <li>
+                                <a href="{{ route('register') }}">Create Account</a> or,
+                                <a href="{{ route('login') }}">Login Here</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @endauth -->
-
+    @endauth
 
 @endsection

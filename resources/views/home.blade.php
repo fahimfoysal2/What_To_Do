@@ -9,21 +9,21 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
 
-                    <!-- {{ __('You are logged in!') }} -->
-                    @if ($tasks ?? '')
+                    <!-- {{ __('You are logged in and have tasks') }} -->
+                    @if (count($tasks) > 0)
                         @foreach($tasks as $task)
-                        {{ $task["id"] }} <br />
-                        {{ $task["title"] }} <br />
-                        {{ $task["description"] }} <br />
-                        <br />
+                            {{ $task["id"] }} <br/>
+                            {{ $task["title"] }} <br/>
+                            {{ $task["description"] }} <br/>
+                            <br/>
                         @endforeach
                     @else
-                        {{ 'Home route, from controller, without data' }}
+                        <b>Task 0 :</b> Create a new Task, Now!!
                     @endif
                 </div>
             </div>
