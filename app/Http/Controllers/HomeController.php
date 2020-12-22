@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Repository\TaskRepository;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
+    private $taskRepository;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param TaskRepository $taskRepository
      */
-    public function __construct()
+    public function __construct(TaskRepository $taskRepository)
     {
         $this->middleware('auth');
+        $this->taskRepository = $taskRepository;
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * Returns all tasks of current user
+     * @return Renderable
+     * @throws \Exception
      */
-    public function index()
+    public function home()
     {
-        $current_user_id = Auth::id();
-        $tasks = Task::where('id',$current_user_id)->get();
+        $tasks = $this->taskRepository->getTasksOfCurrentUser();
         return view('home', compact('tasks'));
     }
 }

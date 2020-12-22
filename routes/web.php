@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $current_user_id = Auth::id();
-    $tasks = \App\Models\Task::where('id',$current_user_id)->get();
-    // return view('welcome', ["tasks"=>$tasks]);
+    $tasks = [];
+    if (Auth::user()) $tasks = (new \App\Repository\TaskRepository())->getRecentTasksOfCurrentUser();
     return view('welcome', compact('tasks'));
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
