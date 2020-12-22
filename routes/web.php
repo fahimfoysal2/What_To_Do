@@ -17,8 +17,16 @@ Route::get('/', function () {
     $tasks = [];
     if (Auth::user()) $tasks = (new \App\Repository\TaskRepository())->getRecentTasksOfCurrentUser();
     return view('welcome', compact('tasks'));
-});
+})->name('welcome');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+
+Route::prefix('task')->group(function (){
+    Route::get('/',[\App\Http\Controllers\TaskController::class,'tasksList'])->name('tasks');
+    Route::get('/create',[\App\Http\Controllers\TaskController::class,'createTask'])
+        ->name('task.create');
+    Route::post('/create',[\App\Http\Controllers\TaskController::class,'saveTask'])
+        ->name('task.save');
+});

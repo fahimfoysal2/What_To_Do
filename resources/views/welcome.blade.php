@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<!--<div>
+    <!--<div>
         <div
             class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
         >
             @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                <a
-                    href="{{ url('/home') }}"
+        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+@auth
+            <a
+                href="{{ url('/home') }}"
                     class="text-sm text-gray-700 underline"
                     >Home</a
                 >
                 @else
-                <a
-                    href="{{ route('login') }}"
+            <a
+                href="{{ route('login') }}"
                     class="text-sm text-gray-700 underline"
                     >Login</a
                 >
@@ -33,57 +33,57 @@
 </div>-->
 
     @auth
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('My Recent Tasks') }}</div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">{{ __('My Recent Tasks') }}</div>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
 
                         <!-- {{ __('You are logged in and have tasks') }} -->
-                        @if (count($tasks) > 0)
-                            @foreach($tasks as $task)
-                                {{ $task["id"] }} <br />
-                                {{ $task["title"] }} <br />
-                                {{ $task["description"] }} <br />
-                                <br />
-                            @endforeach
-                        @else
-                            <b>Task 0 :</b> Create a new Task, Now!!
-                        @endif
+                            @if (count($tasks) > 0)
+                                @foreach($tasks as $task)
+                                    {{'Due :'.$task["end_time"] }} <br/>
+                                    {{ $task["title"] }} <br/>
+                                    {{ $task["description"] }}
+                                    <hr>
+                                @endforeach
+                            @else
+                                <b>Task 0 :</b> Create a new Task, Now!!
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endauth
 
     @guest
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('My Tasks') }}</div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">{{ __('My Tasks') }}</div>
 
-                    <div class="card-body">
+                        <div class="card-body">
                         <!-- {{ __('Guest Section!') }} -->
-                        <ol>
-                            <li>
-                                <a href="{{ route('register') }}">Create Account</a> or,
-                                <a href="{{ route('login') }}">Login Here</a>
-                            </li>
-                        </ol>
+                            <ol>
+                                <li>
+                                    <a href="{{ route('register') }}">Create Account</a> or,
+                                    <a href="{{ route('login') }}">Login Here</a>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endauth
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\Task;
 use App\Traits\AuthTrait;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 use phpDocumentor\Reflection\Types\Collection;
 
 class TaskRepository
@@ -22,7 +23,7 @@ class TaskRepository
         $this->userAuthCheck();
 
         $current_user_id = Auth::id();
-        return Task::where('id', $current_user_id)
+        return Task::where('user_id', $current_user_id)
             ->orderBy('end_time', 'asc')
             ->get();
     }
@@ -45,6 +46,33 @@ class TaskRepository
     public function getRecentTasksOfCurrentUser($noOfTasks = 5)
     {
         return $this->getTasksOfCurrentUser()->take($noOfTasks);
+    }
+
+    public function createTask($task)
+    {
+        $created = date("Y-m-d H:i:s");
+        $end_time = $task['end_time'];
+        if ($end_time) {
+            $end_time = (new \DateTime($task['end_time']))->format('Y-m-d h:i:s');
+        }
+
+        $userID = Auth::id();
+
+//        dd($end_time);
+
+        $task = Task::create([
+            'user_id' => $userID,
+            'title' => $task['title'],
+            'description' => $task['description'],
+            'created' => $created,
+            'end_time' => $end_time
+        ]);
+
+        if (!$task){
+            throw new Exception('Failed to create new task!');
+        }
+
+        return $task;
     }
 
 }
