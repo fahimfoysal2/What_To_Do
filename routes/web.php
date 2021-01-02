@@ -29,4 +29,6 @@ Route::prefix('task')->group(function (){
         ->name('task.create');
     Route::post('/create',[\App\Http\Controllers\TaskController::class,'saveTask'])
         ->name('task.save');
+    Route::get('/{id}/delete',[\App\Http\Controllers\TaskController::class, 'deleteTask'])->name('task.delete');
+    Route::get('/{id}/edit',[\App\Http\Controllers\TaskController::class,'editTask'])->name('task.edit');
 });

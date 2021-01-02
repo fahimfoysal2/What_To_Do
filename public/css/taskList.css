@@ -1,0 +1,29 @@
+.task {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.task_actions{
+    text-decoration: none;
+    float: right;
+    color: red;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.task_title{
+    width: 80%;
+    font-weight: bolder;
+}
+
+.task .task_actions{
+    display: none;
+}
+
+.task:hover .task_actions{
+    display: block;
+}

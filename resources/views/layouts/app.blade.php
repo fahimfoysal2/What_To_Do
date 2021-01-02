@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/taskList.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <div id="app">

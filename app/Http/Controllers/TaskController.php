@@ -51,4 +51,14 @@ class TaskController extends Controller
         }
 
     }
+
+    public function deleteTask()
+    {
+        
+    }
+
+    public function editTask()
+    {
+        
+    }
 }
