@@ -55,7 +55,7 @@
                                     <hr>
                                 @endforeach
                             @else
-                                <b>Task 0 :</b> Create a new Task, Now!!
+                                <b>Task 0 :</b> <a href="{{route('task.create')}}">Create a new Task</a>, Now!!
                             @endif
                         </div>
                     </div>

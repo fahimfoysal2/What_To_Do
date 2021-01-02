@@ -115,9 +115,7 @@
                 </svg>
             </span>
         </center>
-        <h1>What To Do!</h1>
     </span>
-    <hr/>
     <!--    Branding End  -->
 
     <main class="py-4">

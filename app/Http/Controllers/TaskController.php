@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Task;
 use App\Repository\TaskRepository;
 use Illuminate\Http\Request;
 
@@ -32,9 +30,10 @@ class TaskController extends Controller
     }
 
     /**
-     * @todo end time after now / today -> validate
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|void
      * @throws \Illuminate\Validation\ValidationException
+     * @todo end time after now / today -> validate
      */
     public function saveTask(Request $request)
     {
@@ -46,9 +45,9 @@ class TaskController extends Controller
         $savedtask = $this->taskRepository->createTask($request->except('_token'));
 
         if ($savedtask){
-            return redirect('home');
+            return redirect('/');
         }else{
-            return abort('500');
+            return abort('500', 'can not save tha task');
         }
 
     }

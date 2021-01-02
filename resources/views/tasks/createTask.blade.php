@@ -16,7 +16,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="title" type="text"
+                                    <input id="title" type="text" autocomplete="off" value="{{old('title')}}"
                                            class="form-control @error('title') is-invalid @enderror" name="title"
                                            required autofocus>
 
@@ -34,7 +34,7 @@
 
                                 <div class="col-md-6">
                                     <textarea id="description" class="form-control @error('description') is-invalid @enderror"
-                                              name="description" autofocus></textarea>
+                                              name="description">{{old('description')}}</textarea>
 
                                     @error('description')
                                     <span class="invalid-feedback" role="alert">
