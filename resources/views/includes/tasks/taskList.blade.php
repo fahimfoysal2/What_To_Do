@@ -18,16 +18,12 @@
 
                 <!-- {{ __('You are logged in and have tasks') }} -->
                     @if (count($tasks) > 0)
-                        @php
-                            $current_time = (new DateTime())->format(DATE_W3C);
-                        @endphp
-
                         @foreach($tasks as $task)
                             <div class="task">
                                 <div class="row">
                                     <div class="col">
                                         <span class="task_title text-capitalize">{{ $task["title"] }}</span>
-                                        @if($task->end_time && $task->end_time < $current_time)
+                                        @if($task->end_time && $task->end_time < getCurrentTime())
                                             <span class="badge badge-success">Completed</span>
                                         @endif
 
