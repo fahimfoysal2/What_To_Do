@@ -52,14 +52,15 @@ class TaskController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:255',
+            'description' => 'nullable|max:500',
             'end_time' => 'nullable|date|after:now'
         ]);
 
         $savedtask = $this->taskRepository->createTask($request->except('_token'));
 
-        if ($savedtask){
+        if ($savedtask) {
             return redirect('/');
-        }else{
+        } else {
             return abort('500', 'can not save tha task');
         }
 
@@ -69,6 +70,7 @@ class TaskController extends Controller
      * delete task via id and redirect back
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function deleteTask($id)
     {
@@ -78,10 +80,42 @@ class TaskController extends Controller
     }
 
     /**
-     * Allow user to edit the task
+     * Show user form to edit the task
+     * @param $id
+     * @return \Illuminate\Contracts\View\View
+     * @throws \Exception
      */
-    public function editTask()
+    public function editTask($id)
     {
+        $task = $this->taskRepository->getOneTaskOfCurrentUser($id);
+        if ($task) {
+            return view('tasks.editTask', compact('task'));
+        }else{
+            return view('tasks.oneTaskView', compact('task'));
+        }
+    }
 
+
+    /**
+     * Update Tasks
+     * @param $taskId
+     * @param Request $request
+     */
+    public function updateTask($taskId, Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable|max:500',
+            'end_time' => 'nullable|date|after:now'
+        ]);
+
+        $status = $this->taskRepository->saveUpdatedTask($taskId, $validated);
+        if ($status){
+            Session::flash('status', "Task updated Successfully");
+            return redirect(route('task.all'));
+        }else{
+            Session::flash('status', "Failed to update Task");
+            return redirect()->back();
+        }
     }
 }

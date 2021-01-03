@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Repository\TaskRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,29 +18,35 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $tasks = [];
-    if (Auth::user()) $tasks = (new \App\Repository\TaskRepository())->getRecentTasksOfCurrentUser();
+    if (Auth::user()) $tasks = (new TaskRepository())->getRecentTasksOfCurrentUser();
     return view('welcome', compact('tasks'));
 })->name('welcome');
 
+// routes for authentications
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::prefix('task')->group(function (){
-    Route::get('/',[\App\Http\Controllers\TaskController::class,'tasksList'])
-        ->name('tasks');
+    Route::get('/',[TaskController::class,'tasksList'])
+        ->name('task.all');
 
-    Route::get('/create',[\App\Http\Controllers\TaskController::class,'createTask'])->name('task.create');
-    Route::post('/create',[\App\Http\Controllers\TaskController::class,'saveTask'])
+    Route::get('/create',[TaskController::class,'createTask'])
+        ->name('task.create');
+    Route::post('/create',[TaskController::class,'saveTask'])
         ->name('task.save');
 
-    /**
-     * @todo Show one task detail
-     */
-    Route::get('/{id}/',[\App\Http\Controllers\TaskController::class,'showOneTask'])->name('task.view');
+    Route::get('/{id}',[TaskController::class,'showOneTask'])
+        ->name('task.view');
 
-    Route::get('/{id}/delete',[\App\Http\Controllers\TaskController::class, 'deleteTask'])
+    Route::get('/{id}/delete',[TaskController::class, 'deleteTask'])
         ->name('task.delete');
-    Route::get('/{id}/edit',[\App\Http\Controllers\TaskController::class,'editTask'])
+
+    Route::get('/{id}/edit',[TaskController::class,'editTask'])
         ->name('task.edit');
+    Route::post('/{id}/update',[TaskController::class,'updateTask'])
+        ->name('task.update');
+    Route::get('/{id}/update',[TaskController::class,'editTask']);
+
+
 });

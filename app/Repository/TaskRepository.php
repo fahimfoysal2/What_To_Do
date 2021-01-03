@@ -28,6 +28,8 @@ class TaskRepository
             ->get();
     }
 
+
+
     /**
      * get only one task details of one user
      * @param $id
@@ -45,6 +47,8 @@ class TaskRepository
             ->first();
     }
 
+
+
     /**
      * @return int total number of tasks for current user
      * @throws \Exception
@@ -53,6 +57,7 @@ class TaskRepository
     {
         return count($this->getTasksOfCurrentUser());
     }
+
 
 
     /**
@@ -65,17 +70,21 @@ class TaskRepository
         return $this->getTasksOfCurrentUser()->take($noOfTasks);
     }
 
+
+    /**
+     * Create new Task
+     * @param $task
+     * @return mixed
+     */
     public function createTask($task)
     {
         $created = date("Y-m-d H:i:s");
         $end_time = $task['end_time'];
-        if ($end_time) {
-            $end_time = (new \DateTime($task['end_time']))->format('Y-m-d h:i:s');
-        }
+//        if ($end_time) {
+//            $end_time = (new \DateTime($task['end_time']))->format('Y-m-d h:i:s');
+//        }
 
         $userID = Auth::id();
-
-//        dd($end_time);
 
         $task = Task::create([
             'user_id' => $userID,
@@ -92,12 +101,15 @@ class TaskRepository
         return $task;
     }
 
+
+
     /**
      * get one task and delete that
      * @param $id
+     * @return string
      * @throws \Exception
      */
-    public function deleteTask($id)
+    public function deleteTask($id): string
     {
         $task = $this->getOneTaskOfCurrentUser($id);
         if ($task) {
@@ -106,6 +118,17 @@ class TaskRepository
         }else{
             return "Task not Found.";
         }
+    }
+
+
+    /**
+     * Save updated date to database
+     * @param $taskId
+     * @param $task
+     */
+    public function saveUpdatedTask($taskId, $task)
+    {
+        return Task::where("id", $taskId)->update($task);
     }
 
 }
