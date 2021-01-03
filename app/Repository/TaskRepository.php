@@ -29,10 +29,27 @@ class TaskRepository
     }
 
     /**
+     * get only one task details of one user
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getOneTaskOfCurrentUser($id)
+    {
+        // check if user is authenticated.
+        $this->userAuthCheck();
+
+        $current_user_id = Auth::id();
+        return Task::where('user_id', $current_user_id)
+            ->where('id', $id)
+            ->first();
+    }
+
+    /**
      * @return int total number of tasks for current user
      * @throws \Exception
      */
-    public function getTasksCountOfCurrentUser()
+    public function getTasksCountOfCurrentUser(): int
     {
         return count($this->getTasksOfCurrentUser());
     }
@@ -68,11 +85,27 @@ class TaskRepository
             'end_time' => $end_time
         ]);
 
-        if (!$task){
+        if (!$task) {
             throw new Exception('Failed to create new task!');
         }
 
         return $task;
+    }
+
+    /**
+     * get one task and delete that
+     * @param $id
+     * @throws \Exception
+     */
+    public function deleteTask($id)
+    {
+        $task = $this->getOneTaskOfCurrentUser($id);
+        if ($task) {
+            $task->delete();
+            return "Task Deleted";
+        }else{
+            return "Task not Found.";
+        }
     }
 
 }

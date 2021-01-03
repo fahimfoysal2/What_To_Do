@@ -24,11 +24,20 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::prefix('task')->group(function (){
-    Route::get('/',[\App\Http\Controllers\TaskController::class,'tasksList'])->name('tasks');
-    Route::get('/create',[\App\Http\Controllers\TaskController::class,'createTask'])
-        ->name('task.create');
+    Route::get('/',[\App\Http\Controllers\TaskController::class,'tasksList'])
+        ->name('tasks');
+
+    Route::get('/create',[\App\Http\Controllers\TaskController::class,'createTask'])->name('task.create');
     Route::post('/create',[\App\Http\Controllers\TaskController::class,'saveTask'])
         ->name('task.save');
-    Route::get('/{id}/delete',[\App\Http\Controllers\TaskController::class, 'deleteTask'])->name('task.delete');
-    Route::get('/{id}/edit',[\App\Http\Controllers\TaskController::class,'editTask'])->name('task.edit');
+
+    /**
+     * @todo Show one task detail
+     */
+    Route::get('/{id}/',[\App\Http\Controllers\TaskController::class,'showOneTask'])->name('task.view');
+
+    Route::get('/{id}/delete',[\App\Http\Controllers\TaskController::class, 'deleteTask'])
+        ->name('task.delete');
+    Route::get('/{id}/edit',[\App\Http\Controllers\TaskController::class,'editTask'])
+        ->name('task.edit');
 });
