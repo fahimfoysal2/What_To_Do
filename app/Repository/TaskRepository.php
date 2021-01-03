@@ -67,7 +67,12 @@ class TaskRepository
      */
     public function getRecentTasksOfCurrentUser($noOfTasks = 5)
     {
-        return $this->getTasksOfCurrentUser()->take($noOfTasks);
+        $current_user_id = Auth::id();
+        return Task::where('user_id', $current_user_id)
+            ->orderBy('end_time', 'asc')
+            ->whereDate('end_time', '>', new \DateTime())
+            ->take($noOfTasks)
+            ->get();
     }
 
 

@@ -18,12 +18,18 @@
 
                 <!-- {{ __('You are logged in and have tasks') }} -->
                     @if (count($tasks) > 0)
+                        @php
+                            $current_time = (new DateTime())->format(DATE_W3C);
+                        @endphp
 
                         @foreach($tasks as $task)
                             <div class="task">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="task_title">{{ $task["title"] }}</span>
+                                        <span class="task_title text-capitalize">{{ $task["title"] }}</span>
+                                        @if($task->end_time && $task->end_time < $current_time)
+                                            <span class="badge badge-success">Completed</span>
+                                        @endif
 
                                         <span class="task_actions">
                                             <a href="{{route('task.edit', ['id'=>$task->id])}}">&#128295;</a>
@@ -33,15 +39,25 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="end_time">{{$task["end_time"] ?? '' }}</div>
+                                @if($task->end_time)
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="end_time">
+                                                Due: {{date('h:ia, D, d M Y ', strtotime($task->end_time))}}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
-                                <div class="row">
-                                    <div class="col">{{ $task["description"] }}</div>
-                                </div>
+                                @if($task->description)
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="description">
+                                                {{$task->description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     @else
