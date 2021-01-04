@@ -37,3 +37,18 @@ a:hover{
 .description{
     border-top: 1px dashed rgba(0, 0, 0, 0.1);
 }
+
+.task-Expired{
+    color: white;
+    background-color: #dc3545;
+}
+
+.task-Pending{
+    color: black;
+    background-color: #ffc107;
+}
+
+.task-Completed{
+    color: white;
+    background-color: #28a745;
+}

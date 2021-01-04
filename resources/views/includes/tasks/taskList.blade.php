@@ -23,9 +23,6 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="task_title text-capitalize">{{ $task["title"] }}</span>
-                                        @if($task->end_time && $task->end_time < getCurrentTime())
-                                            <span class="badge badge-success">Completed</span>
-                                        @endif
 
                                         <span class="task_actions">
                                             <a href="{{route('task.edit', ['id'=>$task->id])}}">&#128295;</a>
@@ -36,11 +33,13 @@
                                 </div>
 
                                 @if($task->end_time)
+                                    @php
+                                        $task_status = getTaskStatus($task);
+                                    @endphp
                                     <div class="row">
                                         <div class="col">
                                             <div class="end_time">
-                                                Due: {{date('h:ia, D, d M Y ', strtotime($task->end_time))}}
-                                            </div>
+                                                <span class="badge task-{{$task_status}}"> {{$task_status}}  </span> : {{date('h:ia, D, d M Y ', strtotime($task->end_time))}}</div>
                                         </div>
                                     </div>
                                 @endif
