@@ -22,10 +22,25 @@ if (! function_exists('getTaskStatus' )){
      * @return string
      */
     function getTaskStatus(Task $task){
+//        if ($task->end_time < getCurrentTime()){
+//            return array_search(config('enums.task_status.Expired'), config('enums.task_status'));
+//        }
+
+        return array_search($task->status, config('enums.task_status'));
+    }
+}
+
+
+if (! function_exists('taskExpiredStatus' )){
+
+    /**
+     * Get status of a Task
+     * @param Task $task
+     * @return string
+     */
+    function taskExpiredStatus(Task $task){
         if ($task->end_time < getCurrentTime()){
             return array_search(config('enums.task_status.Expired'), config('enums.task_status'));
         }
-
-        return array_search($task->status, config('enums.task_status'));
     }
 }
