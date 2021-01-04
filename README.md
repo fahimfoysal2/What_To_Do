@@ -19,12 +19,17 @@ Environment:
 
 Routes:
 
-route | action
------ | ------
-/              |=> welcome, shows recent(default 5) tasks
-home           |=> shows all tasks
-task           |=> all tasks
-task/create    |=> create new task
-login          |=> Login
-register       |=> register
-password/reset |=> reset pass 
+route | name | action
+----- | ---- | -----
+/                   | welcome        | shows recent(default 5) tasks
+home                | home           | shows all tasks
+task                | task.all       | all tasks
+task/create         | task.create    | create new task
+task/{id}           | task.view      | view single task via ID
+task/{id}/complete  | task.view      | mark task as Completed
+task/{id}/delete    | task.delete    | delete single task
+task/{id}/edit      | task.edit      | edit single task
+task/{id}/update    | task.update    | update a task
+login               | Login
+register            | register
+password/reset      | reset pass 
