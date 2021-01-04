@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Traits\AuthTrait;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Exception;
@@ -19,11 +20,7 @@ class TaskRepository
      */
     public function getTasksOfCurrentUser()
     {
-        // check if user is authenticated.
-        $this->userAuthCheck();
-
-        $current_user_id = Auth::id();
-        return Task::where('user_id', $current_user_id)
+        return User::find(Auth::id())->tasks()
             ->orderBy('end_time', 'asc')
             ->get();
     }
