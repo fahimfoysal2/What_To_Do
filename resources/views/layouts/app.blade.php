@@ -39,7 +39,7 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('All Tasks') }}</a>
                         </li>
 
                         <li class="nav-item">

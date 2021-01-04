@@ -33,7 +33,7 @@
 </div>-->
 
     @php
-        $pageTitle = "My Recent Tasks";
+        $pageTitle = "My Recent Scheduled Tasks";
     @endphp
 
     @auth

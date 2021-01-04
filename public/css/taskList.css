@@ -58,3 +58,7 @@ a:hover{
     font-weight: bold;
     font-size: larger;
 }
+
+.task-{
+    display: none;
+}
