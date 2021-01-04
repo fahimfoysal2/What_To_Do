@@ -90,7 +90,7 @@ class TaskController extends Controller
         $task = $this->taskRepository->getOneTaskOfCurrentUser($id);
         if ($task) {
             return view('tasks.editTask', compact('task'));
-        }else{
+        } else {
             return view('tasks.oneTaskView', compact('task'));
         }
     }
@@ -110,12 +110,30 @@ class TaskController extends Controller
         ]);
 
         $status = $this->taskRepository->saveUpdatedTask($taskId, $validated);
-        if ($status){
+        if ($status) {
             Session::flash('status', "Task updated Successfully");
             return redirect(route('task.all'));
-        }else{
+        } else {
             Session::flash('status', "Failed to update Task");
             return redirect()->back();
         }
+    }
+
+    /**
+     * update task status as completed
+     * @param $taskId
+     */
+    public function completeTask($taskId)
+    {
+        $updateStatus = $this->taskRepository->saveUpdatedTask($taskId, [
+            'status' => config('enums.task_status.Completed')
+        ]);
+
+        if ($updateStatus) {
+            Session::flash('status', "Task Marked as Completed");
+        } else {
+            Session::flash('status', "Failed to update Task");
+        }
+        return redirect()->back();
     }
 }

@@ -44,9 +44,11 @@ Route::prefix('task')->group(function (){
 
     Route::get('/{id}/edit',[TaskController::class,'editTask'])
         ->name('task.edit');
+
     Route::post('/{id}/update',[TaskController::class,'updateTask'])
         ->name('task.update');
     Route::get('/{id}/update',[TaskController::class,'editTask']);
 
-
+    Route::get('/{id}/complete', [TaskController::class, 'completeTask'])
+        ->name('task.complete');
 });

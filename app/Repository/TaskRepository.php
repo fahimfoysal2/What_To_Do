@@ -70,7 +70,7 @@ class TaskRepository
         $current_user_id = Auth::id();
         return Task::where('user_id', $current_user_id)
             ->orderBy('end_time', 'asc')
-            ->whereDate('end_time', '>', new \DateTime())
+            ->whereDate('end_time', '>=', new \DateTime())
             ->take($noOfTasks)
             ->get();
     }
@@ -85,9 +85,9 @@ class TaskRepository
     {
         $created = date("Y-m-d H:i:s");
         $end_time = $task['end_time'];
-//        if ($end_time) {
-//            $end_time = (new \DateTime($task['end_time']))->format('Y-m-d h:i:s');
-//        }
+        if ($end_time) {
+            $end_time = (new \DateTime($task['end_time']))->format('Y-m-d H:i:s');
+        }
 
         $userID = Auth::id();
 
@@ -120,7 +120,7 @@ class TaskRepository
         if ($task) {
             $task->delete();
             return "Task Deleted";
-        }else{
+        } else {
             return "Task not Found.";
         }
     }
@@ -129,11 +129,15 @@ class TaskRepository
     /**
      * Save updated date to database
      * @param $taskId
-     * @param $task
+     * @param $dataToUpdate
+     * @return boolean
+     * @throws \Exception
      */
-    public function saveUpdatedTask($taskId, $task)
+    public function saveUpdatedTask($taskId, $dataToUpdate)
     {
-        return Task::where("id", $taskId)->update($task);
+         return Task::where('id', $taskId)
+            ->where('user_id', Auth::id())
+            ->update($dataToUpdate);
     }
 
 }

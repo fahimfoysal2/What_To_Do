@@ -52,3 +52,9 @@ a:hover{
     color: white;
     background-color: #28a745;
 }
+
+#tick-mark{
+    color: #2a9055;
+    font-weight: bold;
+    font-size: larger;
+}

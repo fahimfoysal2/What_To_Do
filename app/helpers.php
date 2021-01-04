@@ -9,7 +9,7 @@ if (! function_exists('getCurrentTime' )){
      * @return string
      */
     function getCurrentTime(){
-        return (new DateTime())->format(DATE_W3C);
+        return (new \DateTime())->format('Y-m-d H:i:s');
     }
 }
 

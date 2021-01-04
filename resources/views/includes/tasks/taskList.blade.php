@@ -25,6 +25,7 @@
                                         <span class="task_title text-capitalize">{{ $task["title"] }}</span>
 
                                         <span class="task_actions">
+                                            <a href="{{route('task.complete', ['id'=> $task->id])}}"><span id="tick-mark">&#10004;</span></a> |
                                             <a href="{{route('task.edit', ['id'=>$task->id])}}">&#128295;</a>
                                             |
                                             <a href="{{route('task.delete', ['id'=>$task->id])}}">&#10060;</a>
