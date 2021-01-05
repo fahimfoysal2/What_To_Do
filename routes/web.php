@@ -27,27 +27,27 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
-Route::prefix('task')->group(function (){
-    Route::get('/',[TaskController::class,'tasksList'])
+Route::prefix('task')->group(function () {
+    Route::get('/', [TaskController::class, 'tasksList'])
         ->name('task.all');
 
-    Route::get('/create',[TaskController::class,'createTask'])
+    Route::get('/create', [TaskController::class, 'createTask'])
         ->name('task.create');
-    Route::post('/create',[TaskController::class,'saveTask'])
+    Route::post('/create', [TaskController::class, 'saveTask'])
         ->name('task.save');
 
-    Route::get('/{id}',[TaskController::class,'showOneTask'])
+    Route::get('/{id}', [TaskController::class, 'showOneTask'])
         ->name('task.view');
 
-    Route::get('/{id}/delete',[TaskController::class, 'deleteTask'])
+    Route::get('/{id}/delete', [TaskController::class, 'deleteTask'])
         ->name('task.delete');
 
-    Route::get('/{id}/edit',[TaskController::class,'editTask'])
+    Route::get('/{id}/edit', [TaskController::class, 'editTask'])
         ->name('task.edit');
 
-    Route::post('/{id}/update',[TaskController::class,'updateTask'])
+    Route::post('/{id}/update', [TaskController::class, 'updateTask'])
         ->name('task.update');
-    Route::get('/{id}/update',[TaskController::class,'editTask']);
+    Route::get('/{id}/update', [TaskController::class, 'editTask']);
 
     Route::get('/{id}/complete', [TaskController::class, 'completeTask'])
         ->name('task.complete');
