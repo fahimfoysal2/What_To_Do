@@ -17,6 +17,10 @@ class SettingComposer
          * Initial Settings:
          * theme_name: dark / light
          */
-        $view->with('theme_name', 'light');
+
+        // get users theme_type here from singletone
+        $theme = 1; // from singletone = 1/2/null
+
+        $view->with('theme_name', config('enums.settings.theme_name.'.$theme));
     }
 }
