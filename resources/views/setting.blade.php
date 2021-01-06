@@ -15,19 +15,20 @@
 
                             @csrf
 
-                            <div class="form-group row">
-                                <label for="end_time"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Theme') }}</label>
+                            @foreach(config('enums.settings') as $setting_name => $setting_data)
+                                <div class="form-group row">
+                                    <label for="end_time"
+                                           class="col-md-4 col-form-label text-md-right">{{$setting_name}}</label>
 
-                                <div class="col-md-6">
-                                    <select name="theme_id" class="form-control" id="theme">
-                                        {{--            @foreach(config('enums.enums.settings.theme_name') as $x=>$y)--}}
-                                        <option value="1">{{config('enums.settings.theme_name.1')}}</option>
-                                        <option value="2">{{config('enums.settings.theme_name.2')}}</option>
-                                        {{--            @endforeach--}}
-                                    </select>
+                                    <div class="col-md-6">
+                                        <select name="{{$setting_name}}" class="form-control" id="theme">
+                                            @foreach($setting_data as $key=>$value)
+                                                <option value={{$key}}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

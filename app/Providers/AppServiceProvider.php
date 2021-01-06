@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
                 'layouts.app',
                 'includes.tasks.taskList',
                 'tasks.createTask',
-                'tasks.editTask'
+                'tasks.editTask',
+                'setting'
             ],
             SettingComposer::class
         );
