@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repository\SettingRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
 {
@@ -14,26 +15,16 @@ class SettingController extends Controller
         $this->settingRepository = $settingRepository;
     }
 
+
     /**
-     * testing settings save process
+     * Save user setting
+     *
+     * @param Request $request
      */
-    public function testSettingSave()
+    public function saveUserSetting(Request $request)
     {
-        $settings = [
-            'theme_name' => config('enums.settings.theme_name.1')
-        ];
-
-        $this->settingRepository->saveSettings($settings);
-    }
-
-    public function testGetSettingName($id)
-    {
-        $x = config('enums.settings.theme_name.'.$id);
-         print ($x) ? $x:config('enums.settings.theme_name.1');
-    }
-
-    public function testUpdateUserSetting(Request $request)
-    {
-        dd($request->all());
+        $status = $this->settingRepository->saveSettings($request->except('_token'));
+        Session::flash('status', $status);
+        return redirect()->back();
     }
 }

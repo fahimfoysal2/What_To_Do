@@ -30,6 +30,8 @@ task/{id}/complete  | task.view      | mark task as Completed
 task/{id}/delete    | task.delete    | delete single task
 task/{id}/edit      | task.edit      | edit single task
 task/{id}/update    | task.update    | update a task
+setting             | settings       | show settings page 
+setting             | setting.save   | update or create user setting 
 login               | Login
 register            | register
 password/reset      | reset pass 

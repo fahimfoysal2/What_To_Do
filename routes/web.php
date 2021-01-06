@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Repository\TaskRepository;
 use Illuminate\Support\Facades\Auth;
@@ -52,3 +53,8 @@ Route::prefix('task')->group(function () {
     Route::get('/{id}/complete', [TaskController::class, 'completeTask'])
         ->name('task.complete');
 });
+
+Route::view('setting', 'setting')->middleware('auth')
+    ->name('settings');
+Route::post('setting', [SettingController::class, 'saveUserSetting'])
+    ->name('setting.save');

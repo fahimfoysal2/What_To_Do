@@ -12,8 +12,9 @@ return [
             1 => 'light',
             2 => 'dark',
         ],
-        'test' => [
-            1 => 't 1'
+        'task_order' => [
+            1 => 'asc',
+            2 => 'desc'
         ]
     ]
 ];
