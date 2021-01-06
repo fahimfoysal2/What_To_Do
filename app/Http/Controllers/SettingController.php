@@ -20,13 +20,20 @@ class SettingController extends Controller
     public function testSettingSave()
     {
         $settings = [
-            'theme_name' => 'light',
-            'no_of_task' => '3',
+            'theme_name' => config('enums.settings.theme_name.1')
         ];
 
-        $res = $this->settingRepository->saveSettings($settings);
+        $this->settingRepository->saveSettings($settings);
+    }
 
-        dd($res);
+    public function testGetSettingName($id)
+    {
+        $x = config('enums.settings.theme_name.'.$id);
+         print ($x) ? $x:config('enums.settings.theme_name.1');
+    }
 
+    public function testUpdateUserSetting(Request $request)
+    {
+        dd($request->all());
     }
 }
