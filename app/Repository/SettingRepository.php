@@ -30,9 +30,36 @@ class SettingRepository
                 ['setting_value' => $value]
             );
 
-            if ($setting->wasRecentlyCreated || $setting->getChanges()) $status++;
+            if ($setting->wasRecentlyCreated || $setting->wasChanged()) $status++;
         }
-        return $status > 0 ? "$status Settings Updated" : "Nothing Updated";
+
+        /**
+         * here we need to update locally stored setting data
+         * like in, SettingSingleton::updateSettingSingleton()
+         */
+
+        return $status > 0 ? "$status Settings Updated" : "Nothing To Updated";
+    }
+
+
+    /**
+     * get settings of current user
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        $settings = Setting::select('setting_name', 'setting_value')
+            ->where('user_id', Auth::id())
+            ->get()
+            ->all();
+
+        $arranged_setting = [];
+        foreach ($settings as $setting){
+            $arranged_setting[$setting->setting_name] =  $setting->setting_value;
+        }
+
+        return $arranged_setting;
     }
 
 }
