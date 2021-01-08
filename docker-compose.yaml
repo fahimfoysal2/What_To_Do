@@ -8,20 +8,20 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel-app
+    image: what-to-do_image
+    container_name: What-To-Do
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
-      - laravel-network
+      - todoApp-network
 
   db:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel-db
+      MYSQL_DATABASE: todoApp-db
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_PASSWORD: pass
       MYSQL_USER: root
@@ -31,11 +31,11 @@ services:
       - ./data:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql
     networks:
-      - laravel-network
+      - todoApp-network
 
   nginx:
     image: nginx:alpine
-    container_name: laravel-nginx
+    container_name: todoApp-nginx
     restart: unless-stopped
     ports:
       - 443:80
@@ -43,8 +43,8 @@ services:
       - ./:/var/www
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - laravel-network
+      - todoApp-network
 
 networks:
-  laravel-network:
+  todoApp-network:
     driver: bridge
