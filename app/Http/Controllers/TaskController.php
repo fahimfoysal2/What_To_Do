@@ -59,7 +59,7 @@ class TaskController extends Controller
         $savedtask = $this->taskRepository->createTask($request->except('_token'));
 
         if ($savedtask) {
-            return redirect('/');
+            return redirect(route('task.all'));
         } else {
             return abort('500', 'can not save tha task');
         }
